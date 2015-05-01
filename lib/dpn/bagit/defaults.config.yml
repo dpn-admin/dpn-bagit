@@ -1,0 +1,56 @@
+:bag:
+  :max_size: 268435456000 # 250 GB
+  :dpn_dir: dpn-tags
+  :dpn_info:
+    :name: dpn-info.txt
+    :non_arrays:
+      - dpnObjectID
+      - localName
+      - firstNodeName
+      - firstNodeAddress
+      - firstNodeContactName
+      - firstNodeContactEmail
+      - version
+      - previousVersionObjectID
+      - firstVersionObjectID
+      - objectTypeName
+    :arrays:
+      - rightsObjectIDs
+      - interpretiveObjectIDs
+    :capture: "\\:[ \t]*(.*)"
+    :dpnObjectID:
+      :name: DPN-Object-ID
+      :regex: DPN-Object-ID
+    :localName:
+      :name: Local-ID
+      :regex: Local-ID
+    :firstNodeName:
+      :name: First-Node-Name
+      :regex: First-Node-Name
+    :firstNodeAddress:
+      :name: First-Node-Address
+      :regex: First-Node-Address
+    :firstNodeContactName:
+      :name: First-Node-Contact-Name
+      :regex: First-Node-Contact-Name
+    :firstNodeContactEmail:
+      :name: First-Node-Contact-Email
+      :regex: First-Node-Contact-Email
+    :version:
+      :name: Version-Number
+      :regex: Version-Number
+    :previousVersionObjectID:
+      :name: Previous-Version-Object-ID
+      :regex: Previous-Version-Object-ID
+    :firstVersionObjectID:
+      :name: First-Version-Object-ID
+      :regex: First-Version-Object-ID
+    :objectTypeName:
+      :name: Object-Type
+      :regex: Object-Type
+    :interpretiveObjectIDs:
+      :name: Interpretive-Object-ID
+      :regex: Interpretive-Object-ID
+    :rightsObjectIDs:
+      :name: Rights-Object-ID
+      :regex: Rights-Object-ID
