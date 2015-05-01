@@ -29,13 +29,13 @@ class SerializedBagTest < TestCase
 
      def test_getLocation
           bag = DPN::Bagit::SerializedBag.new(@location)
-          assert(bag.getLocation() == @location, "location mismatch")
+          assert(bag.location() == @location, "location mismatch")
      end
 
 
      def test_getSize
           bag = DPN::Bagit::SerializedBag.new(@location)
-          size  = bag.getSize()
+          size  = bag.size()
           assert(size < 9921061 * 1.1, "size greater than expected * 1.1")
           assert(size > 9921061 * 0.9, "size less than expected * 0.9")
      end
@@ -44,7 +44,7 @@ class SerializedBagTest < TestCase
      def test_getFixity
           bag = DPN::Bagit::SerializedBag.new(@location)
           fixity = '321a4266ffed6add184b6998624747e174be384933ca2fc699502dfcd039f765'
-          assert_equal(fixity, bag.getFixity(:sha256))
+          assert_equal(fixity, bag.fixity(:sha256))
      end
 
 

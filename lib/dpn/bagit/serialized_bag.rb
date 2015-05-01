@@ -20,14 +20,14 @@ class DPN::Bagit::SerializedBag
 
   # Returns the size of the serialized bag.
   # @return [Fixnum] Apparent size of the bag in bytes.
-  def getSize()
+  def size()
     return File.size(@location)
   end
 
 
   # Returns the local file location of the Bag.
   # @return [String] The location, which can be relative or absolute.
-  def getLocation()
+  def location()
     return @location
   end
 
@@ -35,7 +35,7 @@ class DPN::Bagit::SerializedBag
   # Returns the fixity of the serialized version of the bag.
   # @param algorithm [Symbol] The algorithm to use for calculation.
   # @return [String] The fixity of the file.
-  def getFixity(algorithm)
+  def fixity(algorithm)
     if @cachedFixity == nil
       case algorithm
       when :sha256
