@@ -52,10 +52,7 @@ class SerializedBagTest < TestCase
           FileUtils.cp(@location, @sandbox)
           serializedBag = DPN::Bagit::SerializedBag.new(File.join(@sandbox, File.basename(@location)))
           bag = serializedBag.unserialize!()
-          if !bag.isValid?
-            puts bag.getErrors
-          end
-          assert(bag.isValid?, "unserialized bag version isn't valid.")
+          assert(bag.valid?, "unserialized bag version isn't valid.")
      end
 
 

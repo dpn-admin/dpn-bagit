@@ -15,10 +15,11 @@ class DPN::Bagit::Bag
         @location = _location
         @cachedValidity = nil
         @cachedFixity = nil
+        @cachedSize = nil
         @validationErrors = []
         @dpnObjectID = nil
 
-        @dpnInfo = DPNInfoTxt.new(self.getDPNInfoFileLocation())
+        @dpnInfo = DPNInfoTxt.new(self.dpn_info_file_location())
         if @dpnInfo[:dpnObjectID] == nil
           @dpnObjectID = File.basename(_location)
         else
@@ -31,7 +32,7 @@ class DPN::Bagit::Bag
     # Get the net fixity of the Bag.
     # @param algorithm [Symbol] Algorithm to use.
     # @return [String] The fixity of the tagmanifest-<alg>.txt file.
-    def getFixity(algorithm)
+    def fixity(algorithm)
       if @cachedFixity == nil
         case algorithm
           when :sha256
@@ -54,27 +55,30 @@ class DPN::Bagit::Bag
 
     # Returns the total size of the Bag.
     # @return [Fixnum] Apparent size of the Bag in bytes.
-    def getSize()
-      size = 0
-      Find.find(self.getLocation) do |f|
-        if File.file?(f) or File.directory?(f)
-          size += File.size(f)
+    def size()
+      if @cachedSize == nil
+        size = 0
+        Find.find(self.location) do |f|
+          if File.file?(f) or File.directory?(f)
+            size += File.size(f)
+          end
         end
+        @cachedSize = size
       end
-      return size
+      return @cachedSize
     end
 
 
     # Returns the local file location of the Bag.
     # @return [String] The location, which can be relative or absolute.
-    def getLocation()
+    def location()
       return @location
     end
 
 
     # Returns the uuid of the bag, according to dpn-info.txt.
     # @return [String]
-    def getUUID()
+    def uuid()
       return @dpnObjectID
     end
 
@@ -82,7 +86,7 @@ class DPN::Bagit::Bag
     # Checks that all required files are present, no extraneous files are present, and all file digests
     # match manifests.
     # @return [Boolean] True if valid, false otherwise.
-    def isValid?()
+    def valid?()
       if @cachedValidity == nil
         if @bag.valid? == false
           #@validationErrors.push("Underlying bag is invalid.")
@@ -156,21 +160,21 @@ class DPN::Bagit::Bag
 
     # Returns validation errors.  The list is not populated until a call to {#isValid?} has been made.
     # @return [Array<String>] The errors.
-    def getErrors()
+    def errors()
       return @dpnInfo.getErrors() + @validationErrors
     end
 
 
     # Returns true if the Bag contains no files.
     # @return [Boolean] True if empty, false otherwise.
-    def isEmpty?()
+    def empty?()
       return @bag.empty?
     end
 
   protected
     # Get the path of the dpn-info.txt file for this bag.
     # @return [String]
-    def getDPNInfoFileLocation()
+    def dpn_info_file_location()
       return File.join(@bag.bag_dir, @settings[:bag][:dpn_dir], @settings[:bag][:dpn_info][:name])
     end
 end
