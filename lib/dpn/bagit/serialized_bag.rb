@@ -55,6 +55,7 @@ class DPN::Bagit::SerializedBag
   # @return [Bag] A bag made from the unserialized object.
   def unserialize!()
     `/bin/tar -xf #{@location} -C #{File.dirname(@location)}`
+    raise RuntimeError, "cannot untar #{file}" unless $?.success?
     name = File.basename(@location).to_s.sub(/\..*/,'')    # remove the file extension
     return DPN::Bagit::Bag.new(File.join(File.dirname(@location), name))
   end
