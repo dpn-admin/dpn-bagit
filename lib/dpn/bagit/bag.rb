@@ -89,7 +89,6 @@ class DPN::Bagit::Bag
     def valid?()
       if @cachedValidity == nil
         if @bag.valid? == false
-          #@validationErrors.push("Underlying bag is invalid.")
           @validationErrors.push(@bag.errors.full_messages)
         end
 
@@ -128,10 +127,6 @@ class DPN::Bagit::Bag
 
         if uuidValidator.isValid?(@dpnInfo[:firstVersionObjectID]) == false
           @validationErrors.push("#{@settings[:bag][:dpn_info][:firstVersionObjectID][:name]} with value \"#{@dpnInfo[:firstVersionObjectID]}\" is not a valid UUIDv4.")
-        end
-
-        if @dpnInfo[:previousVersionObjectID] != "" && uuidValidator.isValid?(@dpnInfo[:previousVersionObjectID]) == false
-          @validationErrors.push("#{@settings[:bag][:dpn_info][:previousVersionObjectID][:name]} with value \"#{@dpnInfo[:previousVersionObjectID]}\" is not a valid UUIDv4.")
         end
 
         @dpnInfo[:rightsObjectIDs].each do |id|

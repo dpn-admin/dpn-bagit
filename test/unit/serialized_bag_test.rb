@@ -43,7 +43,7 @@ class SerializedBagTest < TestCase
 
      def test_getFixity
           bag = DPN::Bagit::SerializedBag.new(@location)
-          fixity = '321a4266ffed6add184b6998624747e174be384933ca2fc699502dfcd039f765'
+          fixity = '3971022d741a7f4f25775ef5aefe0f23a4cea18dc9f3563e832f7f08de3ac0a2'
           assert_equal(fixity, bag.fixity(:sha256))
      end
 

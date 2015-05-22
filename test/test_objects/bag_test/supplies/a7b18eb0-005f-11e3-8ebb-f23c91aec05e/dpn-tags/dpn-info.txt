@@ -1,13 +1,12 @@
 DPN-Object-ID:  a7b18eb0-005f-11e3-8ebb-f23c91aec05e
 Local-ID: tamug_microscope_collection 
-First-Node-Name:  TDR
-First-Node-Address: University of Texas
-First-Node-Contact-Name: Admin	
-First-Node-Contact-Email: admin@tdl.org
+Ingest-Node-Name:  TDR
+Ingest-Node-Address: University of Texas
+Ingest-Node-Contact-Name: Admin
+Ingest-Node-Contact-Email: admin@tdl.org
 Version-Number: 1
-Previous-Version-Object-ID: 
 First-Version-Object-ID: a7b18eb0-005f-11e3-8ebb-f23c91aec05e
 Interpretive-Object-ID:
 Rights-Object-ID: 
 Profile-Object-ID: 
-Object-Type: data
+Bag-Type: data

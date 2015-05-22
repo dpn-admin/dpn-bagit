@@ -21,7 +21,7 @@ class BagTest < TestCase
 
 	def test_buildGoodBag
 		bag = DPN::Bagit::Bag.new(@location)
-		assert(bag != nil, "init failed")
+		assert_not_nil(bag, "init failed")
 	end
 
 	def test_isValid1
@@ -31,23 +31,23 @@ class BagTest < TestCase
 
 	def test_getErrors1
 		bag = DPN::Bagit::Bag.new(@location)
-		assert(bag.errors == [], "expected empty array")
+    assert_equal([], bag.errors, "expected empty array")
 	end
 
 	def test_getFixity1
 		bag = DPN::Bagit::Bag.new(@location)
 		fixity = 'c06bc0e67e8bf9ed0c0b2dc9f5990c2309ce41c7e2386a15025228e2ec2c9649'
-		assert(bag.fixity(:sha256) == fixity, "fixity mismatch")
+    assert_equal(fixity, bag.fixity(:sha256), "fixity_mismatch")
 	end
 
 	def test_getLocation
 		bag = DPN::Bagit::Bag.new(@location)
-		assert(bag.location() == @location, "location mismatch")
+		assert_equal(@location, bag.location(), "location mismatch")
 	end
 
 	def test_getUUID
 		bag = DPN::Bagit::Bag.new(@location)
-		assert(bag.uuid() == 'a7b18eb0-005f-11e3-8ebb-f23c91aec05e', "uuid mismatch")
+		assert_equal('a7b18eb0-005f-11e3-8ebb-f23c91aec05e', bag.uuid(), "uuid mismatch")
 	end
 
 	def test_getSize
