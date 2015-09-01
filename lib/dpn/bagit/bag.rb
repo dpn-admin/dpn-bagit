@@ -20,11 +20,8 @@ class DPN::Bagit::Bag
         @dpnObjectID = nil
 
         @dpnInfo = DPNInfoTxt.new(self.dpn_info_file_location())
-        if @dpnInfo[:dpnObjectID] == nil
-          @dpnObjectID = File.basename(_location)
-        else
-          @dpnObjectID = @dpnInfo[:dpnObjectID]
-        end
+        @dpnObjectID = @dpnInfo[:dpnObjectID]
+        @dpnObjectID ||= File.basename(_location)
     end
 
 
