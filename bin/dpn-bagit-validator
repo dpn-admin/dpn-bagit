@@ -23,7 +23,7 @@ raise ArgumentError unless options[:location]
 
 
 
-bag = DPN::Bagit::Bag.new(location)
+bag = DPN::Bagit::Bag.new(options[:location])
 if bag.valid?
   puts "Bag is valid."
 else
