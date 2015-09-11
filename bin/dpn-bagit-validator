@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require "dpn/bagit"
+require "optparse"
+
+options = {}
+opt_parser = OptionParser.new do |opt|
+  opt.banner = "Usage: dpn-bagit-validator DIRECTORY"
+  opt.on "-l", "--location=PATH",
+         "Path to the volume's directory." do |location|
+    options[:location] = location
+  end
+  opt.on_tail("-h", "--help", "Show this message") do
+    puts opt
+    exit
+  end
+end
+
+opt_parser.parse!
+
+raise ArgumentError unless options[:location]
+
+
+
+bag = DPN::Bagit::Bag.new(location)
+if bag.valid?
+  puts "Bag is valid."
+else
+  puts "Bag is invalid."
+  puts ""
+  puts bag.errors
+end
