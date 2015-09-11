@@ -1,9 +1,11 @@
+require "bundler/setup"
 require "configliere"
-require "bundler"
+require "singleton"
+
 
 # A class that manages the various settings required by dpn-bagit.
 class DPN::Bagit::Settings
-  include Singleton
+  include ::Singleton
 
   def initialize
     @config = nil
