@@ -37,6 +37,26 @@ class DPN::Bagit::Bag
     end
 
 
+    # Return a string that is the dpn-info.txt file.
+    def to_s
+      raise RuntimeError, "invalid dpn info txt!" unless valid?
+      out = []
+      @dpnInfoKeysNonArrays.each_key do |key|
+        key = key.to_sym
+        name = @settings[:bag][:dpn_info][key][:name]
+        out << "#{name}: #{@dpnInfo[key]}"
+      end
+      @dpnInfoKeysArrays.each_key do |key|
+        key = key.to_sym
+        name = @settings[:bag][:dpn_info][key][:name]
+        @dpnInfo[key].each do |value|
+          out << "#{name}: #{value}"
+        end
+      end
+      return out.join("\n")
+    end
+
+
     # Check for validity
     # @return [Boolean]
     def valid?
