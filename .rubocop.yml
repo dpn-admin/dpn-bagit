@@ -1,0 +1,5 @@
+inherit_gem:
+  dlss_cops: "config/dlss_baseline.yml"
+
+AllCops:
+  TargetRubyVersion: 2.2
