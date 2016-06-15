@@ -7,13 +7,13 @@ class DPN::Bagit::UUID4Validator
   #    If set to nil, dashes are optional.
   # @return [UUID4Validator]
   def initialize(dashes = nil)
-    if dashes == nil
-      @pattern = /^[A-Fa-f0-9]{8}-?[A-Fa-f0-9]{4}-?[A-Fa-f0-9]{4}-?[A-Fa-f0-9]{4}-?[A-Fa-f0-9]{12}\Z/
-    elsif dashes == true
-      @pattern = /^[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}\Z/
-    else
-      @pattern = /^[A-Fa-f0-9]{8}[A-Fa-f0-9]{4}[A-Fa-f0-9]{4}[A-Fa-f0-9]{4}[A-Fa-f0-9]{12}\Z/
-    end
+    @pattern = if dashes.nil?
+                 /^[A-Fa-f0-9]{8}-?[A-Fa-f0-9]{4}-?[A-Fa-f0-9]{4}-?[A-Fa-f0-9]{4}-?[A-Fa-f0-9]{12}\Z/
+               elsif dashes == true
+                 /^[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}\Z/
+               else
+                 /^[A-Fa-f0-9]{8}[A-Fa-f0-9]{4}[A-Fa-f0-9]{4}[A-Fa-f0-9]{4}[A-Fa-f0-9]{12}\Z/
+               end
   end
 
   # Check if the given string is valid according to this validator.

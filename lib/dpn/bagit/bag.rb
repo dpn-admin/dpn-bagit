@@ -9,6 +9,7 @@ require "dpn/bagit/bag/dpn_info_txt"
 # bag; in that case, a new Bag object should be created.
 class DPN::Bagit::Bag
     private
+
       def initialize(_location)
         @settings = DPN::Bagit::Settings.instance.config
         @bag = ::BagIt::Bag.new(_location)
@@ -19,77 +20,67 @@ class DPN::Bagit::Bag
         @validationErrors = []
         @dpnObjectID = nil
 
-        @dpnInfo = DPNInfoTxt.new(self.dpn_info_file_location())
+        @dpnInfo = DPNInfoTxt.new(dpn_info_file_location)
         @dpnObjectID = @dpnInfo[:dpnObjectID]
         @dpnObjectID ||= File.basename(_location)
     end
 
-
   public
+
     # Get the net fixity of the Bag.
     # @param algorithm [Symbol] Algorithm to use.
     # @return [String] The fixity of the tagmanifest-<alg>.txt file.
     def fixity(algorithm)
-      if @cachedFixity == nil
+      if @cachedFixity.nil?
         case algorithm
-          when :sha256
-            digest = Digest::SHA256
-            path = File.join(@location, "tagmanifest-sha256.txt")
-            if File.exists?(path)
-              @cachedFixity = digest.file(path).hexdigest
-            else
-              @cachedFixity = ""
-              @cachedValidity = false
-            end
+        when :sha256
+          digest = Digest::SHA256
+          path = File.join(@location, "tagmanifest-sha256.txt")
+          if File.exist?(path)
+            @cachedFixity = digest.file(path).hexdigest
           else
-            raise ArgumentError, "Unknown algorithm."
+            @cachedFixity = ""
+            @cachedValidity = false
+          end
+        else
+          raise ArgumentError, "Unknown algorithm."
         end
 
       end
-      return @cachedFixity
+      @cachedFixity
     end
-
 
     # Returns the total size of the Bag.
     # @return [Fixnum] Apparent size of the Bag in bytes.
-    def size()
-      if @cachedSize == nil
+    def size
+      if @cachedSize.nil?
         size = 0
-        Find.find(self.location) do |f|
-          if File.file?(f) or File.directory?(f)
-            size += File.size(f)
-          end
+        Find.find(location) do |f|
+          size += File.size(f) if File.file?(f) || File.directory?(f)
         end
         @cachedSize = size
       end
-      return @cachedSize
+      @cachedSize
     end
-
 
     # Returns the local file location of the Bag.
     # @return [String] The location, which can be relative or absolute.
-    def location()
-      return @location
-    end
-
+    attr_reader :location
 
     # Returns the uuid of the bag, according to dpn-info.txt.
     # @return [String]
-    def uuid()
-      return @dpnObjectID
+    def uuid
+      @dpnObjectID
     end
-
 
     # Checks that all required files are present, no extraneous files are present, and all file digests
     # match manifests.
     # @return [Boolean] True if valid, false otherwise.
-    def valid?()
-      if @cachedValidity == nil
-        if @bag.valid? == false
-          @validationErrors.push(@bag.errors.full_messages)
-        end
+    def valid?
+      if @cachedValidity.nil?
+        @validationErrors.push(@bag.errors.full_messages) if @bag.valid? == false
 
-        if File.exists?(@bag.fetch_txt_file) == true
+        if File.exist?(@bag.fetch_txt_file) == true
           @validationErrors.push("The file fetch.txt is present and unsupported.")
         end
 
@@ -97,7 +88,7 @@ class DPN::Bagit::Bag
           @validationErrors.push("The name of the root directory does not match the #{@settings[:bag][:dpn_info][:dpnObjectID][:name]}.")
         end
 
-        if File.exists?(@bag.manifest_file("sha256")) == true
+        if File.exist?(@bag.manifest_file("sha256")) == true
           if File.readable?(@bag.manifest_file("sha256")) == false
             @validationErrors.push("The file manifest-sha256.txt exists but cannot be read.")
           end
@@ -105,7 +96,7 @@ class DPN::Bagit::Bag
           @validationErrors.push("The file manifest-sha256.txt does not exist.")
         end
 
-        if File.exists?(@bag.tagmanifest_file("sha256")) == true
+        if File.exist?(@bag.tagmanifest_file("sha256")) == true
           if File.readable?(@bag.tagmanifest_file("sha256")) == false
             @validationErrors.push("The file tagmanifest-sha256.txt exists but cannot be read.")
           end
@@ -113,9 +104,7 @@ class DPN::Bagit::Bag
           @validationErrors.push("The file tagmanifest-sha256.txt does not exist.")
         end
 
-        if @dpnInfo[:version].to_i <= 0
-          @validationErrors.push("Version must be > 0.")
-        end
+        @validationErrors.push("Version must be > 0.") if @dpnInfo[:version].to_i <= 0
 
         uuidValidator = DPN::Bagit::UUID4Validator.new(true)
         if uuidValidator.isValid?(@dpnInfo[:dpnObjectID]) == false
@@ -138,35 +127,33 @@ class DPN::Bagit::Bag
           end
         end
 
-
-        if @validationErrors.empty? == true and @dpnInfo.getErrors.empty? == true
-          @cachedValidity = true
-        else
-          @cachedValidity = false
-        end
+        @cachedValidity = if @validationErrors.empty? == true && @dpnInfo.getErrors.empty? == true
+                            true
+                          else
+                            false
+                          end
       end
 
-      return @cachedValidity
+      @cachedValidity
     end
-
 
     # Returns validation errors.  The list is not populated until a call to {#isValid?} has been made.
     # @return [Array<String>] The errors.
-    def errors()
-      return @dpnInfo.getErrors() + @validationErrors
+    def errors
+      @dpnInfo.getErrors + @validationErrors
     end
-
 
     # Returns true if the Bag contains no files.
     # @return [Boolean] True if empty, false otherwise.
-    def empty?()
-      return @bag.empty?
+    def empty?
+      @bag.empty?
     end
 
   protected
+
     # Get the path of the dpn-info.txt file for this bag.
     # @return [String]
-    def dpn_info_file_location()
-      return File.join(@bag.bag_dir, @settings[:bag][:dpn_dir], @settings[:bag][:dpn_info][:name])
+    def dpn_info_file_location
+      File.join(@bag.bag_dir, @settings[:bag][:dpn_dir], @settings[:bag][:dpn_info][:name])
     end
 end
