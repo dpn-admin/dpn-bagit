@@ -6,3 +6,7 @@ rvm:
 
 script: rake test
 
+
+addons:
+    code_climate:
+        repo_token: d20107af76061a5ccc8a26570c7eab36d3771f7e5d304ae4e6bc4a0aaa7a5cb4
