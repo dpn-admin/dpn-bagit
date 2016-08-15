@@ -1,3 +1,6 @@
+
+[![Build Status](https://travis-ci.org/dpn-admin/dpn-bagit.svg?branch=master)](https://travis-ci.org/dpn-admin/dpn-bagit)
+
 # DPN::Bagit
 
 ## Description
