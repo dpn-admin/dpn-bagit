@@ -23,6 +23,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "test-unit"
   spec.add_development_dependency "yard", "~> 0.8"
   spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "pry"
+  spec.add_development_dependency "pry-doc"
+  spec.add_development_dependency "rubocop"
 
   spec.add_runtime_dependency "configliere"
   spec.add_runtime_dependency "bagit", "~>0.3.2"
