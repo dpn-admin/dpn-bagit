@@ -1,0 +1,12 @@
+DPN-Object-ID: 2fced019-7385-4532-8e76-d6cdccd09a12
+Local-ID: tamug_microscope_collection_hidden
+Ingest-Node-Name:  TDR
+Ingest-Node-Address: University of Texas
+Ingest-Node-Contact-Name: Admin
+Ingest-Node-Contact-Email: admin@tdl.org
+Version-Number: 1
+First-Version-Object-ID: 2fced019-7385-4532-8e76-d6cdccd09a12
+Interpretive-Object-ID:
+Rights-Object-ID:
+Profile-Object-ID:
+Bag-Type: data
