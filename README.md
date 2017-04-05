@@ -1,4 +1,5 @@
 # DPN::Bagit
+![dpn_bagit](https://cloud.githubusercontent.com/assets/26936378/24721060/1aa4be40-1a0d-11e7-89f1-3310507810dc.jpg)
 
 ## Description
 
