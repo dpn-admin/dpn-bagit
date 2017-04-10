@@ -1,3 +1,6 @@
+
+[![Build Status](https://travis-ci.org/dpn-admin/dpn-bagit.svg?branch=master)](https://travis-ci.org/dpn-admin/dpn-bagit) [![Code Climate](https://codeclimate.com/github/dpn-admin/dpn-bagit/badges/gpa.svg)](https://codeclimate.com/github/dpn-admin/dpn-bagit) [![Test Coverage](https://codeclimate.com/github/dpn-admin/dpn-bagit/badges/coverage.svg)](https://codeclimate.com/github/dpn-admin/dpn-bagit/coverage)
+
 # DPN::Bagit
 
 ## Description
